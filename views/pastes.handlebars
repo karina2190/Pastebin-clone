@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/prism.css">
+</head>
+<body>
+     <h1 class="text-center font-italic">Posted pastes</h1>
+     <button onclick="window.location.href='/postPaste'" class="btn btn-primary">Create another paste</button>
+    <div class="container mt-5">
+        {{#each pastes}}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.id}}. {{this.title}}</h5>
+                     <p class="card-text" style="position: absolute; top: 0; right: 0;">{{this.programming_language}}</p>
+                    <pre class="card-text language-{{this.programming_language}}">
+                         <code>{{this.content}}</code>
+                    </pre>
+                    <p class="card-text" style="position: absolute; bottom: 0; right: 0;"> Created at: {{this.formatted_created_at}}</p>
+                    <p class="card-text mb-0" style="position: absolute; bottom: 0; right: 0;" > Last modified at: {{this.formatted_last_modified_at}}</p>
+                    <a href="/editPaste/{{this.id}}" class="btn btn-primary">Edit</a>
+                    <form action="/deletePaste/{{this.id}}" method="POST" onsubmit="return confirmDelete()">
+                         <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+         </div>
+        {{/each}}
+    </div>
+    <script src="/prism.js"></script>
+    <script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this paste?");
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
+
+</body>
+</html>
